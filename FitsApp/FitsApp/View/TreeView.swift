@@ -8,36 +8,59 @@
 import SwiftUI
 
 struct TreeView: View {
+    @StateObject private var viewModel = TreeViewModel()
+    
     var body: some View {
         ZStack {
             Color("Background")
                 .ignoresSafeArea()
             
-            Image("TopCloud")
-                .resizable()
-                .scaledToFit()
-                .ignoresSafeArea(edges: .top)
-                .position(x: 200, y: 0)
-
-            
             ScrollView(.vertical, showsIndicators: false) {
-                ZStack {
-                    CloudView()
+                ZStack() {
+                    Text("12,000 STEPS")
+                        .font(.system(size: 32, weight: .bold, design: .default))
+                        .offset(x:0,y: -480)
                     
+                    // Trunk
+                    Image("Trunk")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60)
+                        .offset(x:0,y: 600)
+                    
+                    // Ground
+                    Image("Ground")
+                        .resizable()
+                        .scaledToFit()
+                        .offset(x:0,y: 700)
+                    
+                    
+                    // Tree crown
                     VStack {
-                        Image("Trunck")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60)
-                            .position(x: 200, y: 600)
+                        Color.clear
+                            .frame(height: 300)
                         
-                        Image("Ground")
-                            .resizable()
+                        TreeCrownView(viewModel: viewModel)
+                            .frame(height: CGFloat(viewModel.treeSegmentCount * 100 + 200))
                             .scaledToFit()
-                            .frame(width: 770)
-                            .position(x: 200, y: 530)
+                            .offset(x:0,y: -140)
                     }
+                    
+                    CloudView()
+                        .offset(x:0,y: 340)
+                    
                 }
+                .frame(maxWidth: .infinity)
+            }
+            
+            // Clouds overlay on top
+            VStack {
+                Image("TopCloud")
+                    .resizable()
+                    .scaledToFit()
+                    .ignoresSafeArea(edges: .top)
+                
+                Spacer()
             }
         }
     }
