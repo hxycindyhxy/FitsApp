@@ -134,23 +134,28 @@ struct TreeView: View {
 
                 // Customisation overlay sliding from the bottom
                 if showingCustomisation {
-                    ZStack(alignment: .bottomTrailing) {
-                        CustomisationView()
-                            .transition(.move(edge: .bottom))
-                        // Dismiss button
-                        Button {
-                            withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
-                                showingCustomisation = false
+                    GeometryReader { customGeo in
+                        ZStack(alignment: .bottomTrailing) {
+                            CustomisationView()
+                                .frame(width: customGeo.size.width, height: customGeo.size.height)
+                                .transition(.move(edge: .bottom))
+                            
+                            
+                            // Dismiss button
+                            Button {
+                                withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
+                                    showingCustomisation = false
+                                }
+                            } label: {
+                                Image(systemName: "chevron.up")
+                                    .font(.system(size: 20, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(12)
+                                    .background(Circle().fill(Color.black.opacity(0.35)))
                             }
-                        } label: {
-                            Image(systemName: "chevron.up")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(12)
-                                .background(Circle().fill(Color.black.opacity(0.35)))
+                            .padding(.bottom, 16)
+                            .padding(.trailing, 16)
                         }
-                        .padding(.bottom, 16)
-                        .padding(.trailing, 16)
                     }
                 }
             }
