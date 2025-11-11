@@ -20,7 +20,7 @@ struct TreeView: View {
                 .navigationDestination(for: Route.self) { route in
                     switch route {
                     case .goal:
-                        GoalView()
+                        GoalView(onDismiss: {})
                     case .customise:
                         CustomisationView()
                     }
@@ -120,26 +120,17 @@ struct TreeView: View {
                 .allowsHitTesting(!showingGoal && !showingCustomisation)
 
                 // Goal overlay sliding from the top
-                if showingGoal {
-                    ZStack(alignment: .topLeading) {
-                        GoalView()
-                            .transition(.move(edge: .top))
-                        // Dismiss button
-                        Button {
-                            withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
-                                showingGoal = false
-                            }
-                        } label: {
-                            Image(systemName: "chevron.down")
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(12)
-                                .background(Circle().fill(Color.black.opacity(0.35)))
-                        }
-                        .padding(.top, 16)
-                        .padding(.leading, 16)
+                Group {
+                    if showingGoal {
+                        GoalView(onDismiss: {
+                            showingGoal = false
+                        })
+                        .transition(.move(edge: .top))
+                        .allowsHitTesting(true)
+                        .zIndex(1)
                     }
                 }
+                .animation(.spring(response: 0.45, dampingFraction: 0.9), value: showingGoal)
 
                 // Customisation overlay sliding from the bottom
                 if showingCustomisation {
