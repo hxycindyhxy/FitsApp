@@ -12,24 +12,33 @@ struct TreeCrownView: View {
     
     var body: some View {
         ZStack {
+            // Case 1: only first segment
+            if viewModel.treeSegmentCount == 1 {
+                Image(viewModel.getTreeImage(for: 0))
+                    .offset(x: 0, y: -70)
+            }
             
-//            Image(viewModel.getTreeImage(for: 0))
-//                .offset(x: 0, y: 80)
+            // Case 2: show first and second segments
+            else if viewModel.treeSegmentCount == 2 {
+                Image(viewModel.getTreeImage(for: 0))
+                    .offset(x: 0, y: -120)
+                Image(viewModel.getTreeImage(for: 1))
+                    .offset(x: 0, y: -220)
+            }
             
-            // Dynamically generate tree segments based on step count
-            ForEach(0..<viewModel.treeSegmentCount, id: \.self) { index in
-                
-                Image(viewModel.getTreeImage(for: index))
-                    .offset(x: 0, y: getYPosition(for: index))
+            // Case 3 and beyond: show all segments dynamically
+            else if viewModel.treeSegmentCount >= 3 {
+                ForEach(0..<viewModel.treeSegmentCount, id: \.self) { index in
+                    Image(viewModel.getTreeImage(for: index))
+                        .offset(x: 0, y: getYPosition(for: index))
+                }
             }
         }
     }
     
     // Calculate Y position for each segment
-    // First image at y: 260, then each subsequent image is 100 units lower
-    // -300
     private func getYPosition(for index: Int) -> CGFloat {
-        return -160 + CGFloat(index * -1 * 100)
+        return -160 + CGFloat(index * -100)
     }
 }
 
