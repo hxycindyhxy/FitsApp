@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 class TreeViewModel: ObservableObject {
-    @Published var stepCount: Int = 55_000 // change to test different heights
+    @Published var stepCount: Int = 35_000 // change to test different heights
 
     // 1 segment per 5,000 steps
     var treeSegmentCount: Int {
