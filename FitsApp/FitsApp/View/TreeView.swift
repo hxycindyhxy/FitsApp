@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TreeView: View {
     @StateObject private var viewModel = TreeViewModel()
+    @StateObject private var goalSettings = GoalSettings()
     @State private var path = NavigationPath()
     @State private var showingGoal: Bool = false
     @State private var showingCustomisation: Bool = false
@@ -20,7 +21,7 @@ struct TreeView: View {
                 .navigationDestination(for: Route.self) { route in
                     switch route {
                     case .goal:
-                        GoalView(onDismiss: {})
+                        GoalView(goalSettings: goalSettings, onDismiss: {})
                     case .customise:
                         CustomisationView()
                     }
@@ -66,11 +67,21 @@ struct TreeView: View {
                             }
                         }
                         .overlay (alignment: .top) {
-                            VStack{
-                                Color.clear.frame(height: 200)
+                            VStack(spacing: 8){
+                                Color.clear.frame(height: 280)
+                                
                                 // Top content
                                 Text("\(viewModel.stepCount.formatted(.number)) STEPS")
                                     .font(.system(size: 32, weight: .bold, design: .default))
+                            }
+                        }
+                        .overlay(alignment: .bottom) {
+                            // Tree name plaque - positioned to the side of the tree base
+                            // Adjust x: left/right position, y: height (negative = higher, positive = lower)
+                            if !goalSettings.treeName.isEmpty {
+                                TreeNamePlaque(name: goalSettings.treeName)
+                                    .rotationEffect(.degrees(-3))
+                                    .offset(x: -100, y: -80)
                             }
                         }
                     }
@@ -119,11 +130,14 @@ struct TreeView: View {
 
                 // Goal overlay sliding from the top
                 if showingGoal {
-                    GoalView(onDismiss: {
-                        withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
-                            showingGoal = false
+                    GoalView(
+                        goalSettings: goalSettings,
+                        onDismiss: {
+                            withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
+                                showingGoal = false
+                            }
                         }
-                    })
+                    )
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .transition(.move(edge: .top))
                     .allowsHitTesting(true)
@@ -233,6 +247,58 @@ struct SmallGlassButtonStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
             .opacity(configuration.isPressed ? 0.95 : 1.0)
             .shadow(color: Color.black.opacity(configuration.isPressed ? 0.08 : 0.2), radius: configuration.isPressed ? 4 : 10, x: 0, y: configuration.isPressed ? 2 : 6)
+    }
+}
+
+// Tree name plaque - looks like a garden stake sign on the grass
+struct TreeNamePlaque: View {
+    let name: String
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            // Sign board
+            Text(name)
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(red: 0.3, green: 0.25, blue: 0.2))
+                .tracking(1)
+                .textCase(.uppercase)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 7)
+                .background(
+                    ZStack {
+                        // Wooden sign background
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        Color(red: 0.82, green: 0.71, blue: 0.55),
+                                        Color(red: 0.76, green: 0.65, blue: 0.49)
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                        
+                        // Border
+                        RoundedRectangle(cornerRadius: 6)
+                            .strokeBorder(Color(red: 0.5, green: 0.4, blue: 0.3), lineWidth: 1.5)
+                    }
+                )
+            
+            // Stake going into the ground
+            Rectangle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.6, green: 0.5, blue: 0.35),
+                            Color(red: 0.55, green: 0.45, blue: 0.3)
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .frame(width: 4, height: 28)
+        }
     }
 }
 

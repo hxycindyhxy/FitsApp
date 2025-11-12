@@ -105,9 +105,9 @@ struct FlippableButton: View {
 }
 
 struct GoalView: View {
+    @ObservedObject var goalSettings: GoalSettings
     var onDismiss: () -> Void
     
-    @StateObject private var goalSettings = GoalSettings()
     @State private var selectedActivity: String? = nil
     @State private var treeName: String = ""
     @State private var showConfirmation: Bool = false
@@ -364,5 +364,5 @@ private struct BottomNavigationBar: View {
 }
 
 #Preview {
-    GoalView(onDismiss: {})
+    GoalView(goalSettings: GoalSettings(), onDismiss: {})
 }
