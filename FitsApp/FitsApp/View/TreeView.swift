@@ -72,7 +72,7 @@ struct TreeView: View {
                                 
                                 // Top content
                                 Text("\(viewModel.stepCount.formatted(.number)) STEPS")
-                                    .font(.system(size: 32, weight: .bold, design: .default))
+                                    .font(.custom("Poppins-Bold", size: 36))
                             }
                         }
                         .overlay(alignment: .bottom) {
@@ -108,6 +108,8 @@ struct TreeView: View {
                     }
                     .buttonStyle(GlassButtonStyle())
                     .offset(x:0,y: -350)
+                    
+                    
 
                     // Down button -> show CustomisationView
                     Button {
@@ -147,7 +149,7 @@ struct TreeView: View {
                 // Customisation overlay sliding from the bottom
                 if showingCustomisation {
                     GeometryReader { customGeo in
-                        ZStack(alignment: .bottomTrailing) {
+                        ZStack(alignment: .top) {
                             CustomisationView()
                                 .frame(width: customGeo.size.width, height: customGeo.size.height)
                                 .transition(.move(edge: .bottom))
@@ -159,14 +161,14 @@ struct TreeView: View {
                                     showingCustomisation = false
                                 }
                             } label: {
-                                Image(systemName: "chevron.up")
+                                Image(systemName: "arrow.up")
                                     .font(.system(size: 20, weight: .bold))
                                     .foregroundColor(.white)
                                     .padding(12)
-                                    .background(Circle().fill(Color.black.opacity(0.35)))
                             }
-                            .padding(.bottom, 16)
-                            .padding(.trailing, 16)
+                            .padding(.top, 16)
+                            .buttonStyle(GlassButtonStyle())
+                           
                         }
                     }
                     .zIndex(2)
@@ -301,6 +303,8 @@ struct TreeNamePlaque: View {
         }
     }
 }
+
+
 
 
 #Preview {

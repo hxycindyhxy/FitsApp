@@ -15,9 +15,22 @@ let Prices = [15000, 30000, 50000, 75000, 100000, 150000]
 
 struct CustomisationView: View {
     
-    @AppStorage("selectedTreeIndex") private var selectedTreeIndex: Int = 0
-    @State private var waterCurrency: Int = 30000
-    @State private var unlockedTrees: [Bool] = [true, false, false, false, false, false]
+    @AppStorage("selectedTreeIndex") public var selectedTreeIndex: Int = 0
+    @AppStorage("waterCurrency") private var waterCurrency: Int = 30000
+    
+    //UNLOCKED TREES CHANGE 1 - Convert to @AppStorage individual variables
+    @AppStorage("tree0Unlocked") private var tree0Unlocked: Bool = true
+    @AppStorage("tree1Unlocked") private var tree1Unlocked: Bool = false
+    @AppStorage("tree2Unlocked") private var tree2Unlocked: Bool = false
+    @AppStorage("tree3Unlocked") private var tree3Unlocked: Bool = false
+    @AppStorage("tree4Unlocked") private var tree4Unlocked: Bool = false
+    @AppStorage("tree5Unlocked") private var tree5Unlocked: Bool = false
+    
+    //UNLOCKED TREES CHANGE 2 - Computed property to combine into array
+    private var unlockedTrees: [Bool] {
+        [tree0Unlocked, tree1Unlocked, tree2Unlocked, tree3Unlocked, tree4Unlocked, tree5Unlocked]
+    }
+    
     @State private var shakeIndex: Int? = nil
     
     var body: some View {
@@ -51,7 +64,18 @@ struct CustomisationView: View {
                                 } else {
                                     if waterCurrency >= Prices[index] {
                                         waterCurrency -= Prices[index]
-                                        unlockedTrees[index] = true
+                                        
+                                        //UNLOCKED TREES CHANGE 3 - Update the correct @AppStorage variable
+                                        switch index {
+                                        case 0: tree0Unlocked = true
+                                        case 1: tree1Unlocked = true
+                                        case 2: tree2Unlocked = true
+                                        case 3: tree3Unlocked = true
+                                        case 4: tree4Unlocked = true
+                                        case 5: tree5Unlocked = true
+                                        default: break
+                                        }
+                                        
                                         selectedTreeIndex = index
                                     } else {
                                         // Not enough currency - trigger shake
@@ -103,11 +127,9 @@ struct CustomisationView: View {
                 ZStack() {
                     Image("DirtFrontLayer")
                         .resizable()
-                        .frame(width: 700, height: 200)
+                        .frame(width: 700, height: 210)
                         .padding(.bottom, 510)
-                    Text("Customise")
-                        .offset(y:-240)
-                        .font(.custom("Poppins-Bold", size: 40))
+                    
                     
                     Image("WaterCurrencyBgd")
                         .resizable()

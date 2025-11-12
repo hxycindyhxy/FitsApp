@@ -9,17 +9,30 @@ import SwiftUI
 import Combine
 
 class TreeViewModel: ObservableObject {
-    @Published var stepCount: Int = 10_000 // change to test different heights
+    @Published var stepCount: Int = 25_000 // change to test different heights
+    @AppStorage("selectedTreeIndex") public var selectedTreeIndex: Int = 0
+
 
     // 1 segment per 5,000 steps
     var treeSegmentCount: Int {
         return min(stepCount / 5000, 20)
     }
+    
+    func add(steps: Int) {
+        stepCount += max(0, steps)
+    }
 
     func getTreeImage(for index: Int) -> String {
-        let pattern = [1, 3, 2]
-        let imageNumber = pattern[index % 3]
-        return "CandyTree_\(imageNumber)"
+        if (selectedTreeIndex == 1) {
+            let pattern = [1, 3, 5, 9, 2, 4, 6, 8]
+            let imageNumber = pattern[index % 9]
+            return "Pine\(imageNumber)"
+        }
+        else {
+            let pattern = [1, 3, 2]
+            let imageNumber = pattern[index % 3]
+            return "CandyTree_\(imageNumber)"
+        }
     }
 
     // MARK: - CloudView data source
