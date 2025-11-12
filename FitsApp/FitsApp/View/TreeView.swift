@@ -96,7 +96,6 @@ struct TreeView: View {
                             .opacity(0.8)
                     }
                     .buttonStyle(GlassButtonStyle())
-                    .padding()
                     .offset(x:0,y: -350)
 
                     // Down button -> show CustomisationView
@@ -111,7 +110,6 @@ struct TreeView: View {
                             .opacity(0.8)
                     }
                     .buttonStyle(GlassButtonStyle())
-                    .padding()
                     .offset(x:0,y: 360)
                 }
                 .offset(y: showingGoal ? geo.size.height * 1.1 : (showingCustomisation ? -geo.size.height * 1.1 : 0))
@@ -120,17 +118,17 @@ struct TreeView: View {
                 .allowsHitTesting(!showingGoal && !showingCustomisation)
 
                 // Goal overlay sliding from the top
-                Group {
-                    if showingGoal {
-                        GoalView(onDismiss: {
+                if showingGoal {
+                    GoalView(onDismiss: {
+                        withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
                             showingGoal = false
-                        })
-                        .transition(.move(edge: .top))
-                        .allowsHitTesting(true)
-                        .zIndex(1)
-                    }
+                        }
+                    })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .transition(.move(edge: .top))
+                    .allowsHitTesting(true)
+                    .zIndex(2)
                 }
-                .animation(.spring(response: 0.45, dampingFraction: 0.9), value: showingGoal)
 
                 // Customisation overlay sliding from the bottom
                 if showingCustomisation {
@@ -157,6 +155,7 @@ struct TreeView: View {
                             .padding(.trailing, 16)
                         }
                     }
+                    .zIndex(2)
                 }
             }
         }
@@ -197,6 +196,43 @@ struct GlassButtonStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
             .opacity(configuration.isPressed ? 0.9 : 0.85)
             .shadow(color: Color.black.opacity(configuration.isPressed ? 0.06 : 0.18), radius: configuration.isPressed ? 4 : 10, x: 0, y: configuration.isPressed ? 2 : 6)
+    }
+}
+
+// Smaller glass button style
+struct SmallGlassButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: 52, height: 52) // smaller size
+            .contentShape(Circle())
+            .background(
+                ZStack {
+                    // translucent material base (iOS 15+). Falls back to a semi-transparent blur-like color in older SDKs.
+                    if #available(iOS 15.0, *) {
+                        Circle().fill(.ultraThinMaterial)
+                    } else {
+                        Circle().fill(Color.white.opacity(0.15))
+                    }
+
+                    // subtle glossy overlay gradient
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.white.opacity(configuration.isPressed ? 0.08 : 0.15), Color.white.opacity(0.03)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .blendMode(.overlay)
+
+                    // fine border
+                    Circle().stroke(Color.white.opacity(0.3), lineWidth: 1)
+                }
+            )
+            .clipShape(Circle())
+            .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
+            .opacity(configuration.isPressed ? 0.95 : 1.0)
+            .shadow(color: Color.black.opacity(configuration.isPressed ? 0.08 : 0.2), radius: configuration.isPressed ? 4 : 10, x: 0, y: configuration.isPressed ? 2 : 6)
     }
 }
 

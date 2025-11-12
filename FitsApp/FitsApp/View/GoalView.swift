@@ -157,9 +157,11 @@ struct GoalView: View {
         }
         .background(Color(hex: "#F5F5F8").ignoresSafeArea())
         .onTapGesture { isTextFieldFocused = false }
-        .onAppear { isDismissing = false }
+        .onAppear { 
+            isDismissing = false
+        }
         .overlay(alignment: .bottom) {
-            if !isTextFieldFocused && !isDismissing {
+            if !isTextFieldFocused {
                 BottomNavigationBar(isDismissing: $isDismissing, onDismiss: onDismiss)
             }
         }
@@ -314,6 +316,7 @@ private struct TreeNameCard: View {
     
     private func confirmAction() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        isTextFieldFocused = false
         goalSettings.treeName = treeName
         showConfirmation = true
         
@@ -332,26 +335,30 @@ private struct BottomNavigationBar: View {
     let onDismiss: () -> Void
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 30)
-                .fill(Color.white)
-                .frame(height: 80)
-                .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: -5)
+        if !isDismissing {
+            ZStack {
+                RoundedRectangle(cornerRadius: 30)
+                    .fill(Color.white)
+                    .frame(height: 80)
+                    .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: -5)
+                    .offset(y: 30)
+                    .ignoresSafeArea(edges: .bottom)
+                    .allowsHitTesting(false)
+                
+                Button {
+                    isDismissing = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        onDismiss()
+                    }
+                } label: {
+                    Image(systemName:"arrow.down")
+                        .font(Font.system(size: 22, weight: .bold))
+                        .foregroundColor(.white)
+                        .opacity(0.8)
+                }
+                .buttonStyle(GlassButtonStyle())
                 .offset(y: 30)
-                .ignoresSafeArea(edges: .bottom)
-                .allowsHitTesting(false)
-            
-            Button {
-                isDismissing = true
-                onDismiss()
-            } label: {
-                Image(systemName:"arrow.down")
-                    .font(Font.system(size: 22, weight: .bold))
-                    .foregroundColor(.white)
-                    .opacity(0.8)
             }
-            .buttonStyle(GlassButtonStyle())
-            .padding(.bottom, -60)
         }
     }
 }
