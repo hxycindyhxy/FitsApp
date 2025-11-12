@@ -73,6 +73,8 @@ struct TreeView: View {
                                 // Top content
                                 Text("\(viewModel.stepCount.formatted(.number)) STEPS")
                                     .font(.custom("Poppins-Bold", size: 36))
+                                    .offset(x: 0, y: -80)
+                                
                             }
                         }
                         .overlay(alignment: .bottom) {
