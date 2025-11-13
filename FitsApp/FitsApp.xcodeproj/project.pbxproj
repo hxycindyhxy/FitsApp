@@ -54,7 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3CF14A302EC43158000E20DF /* appleWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "appleWatch Watch App.app"; path = "/Users/cindyhu/Desktop/TestingTesting/OneMOre/FitsApp/FitsApp/build/Debug-watchos/appleWatch Watch App.app"; sourceTree = "<absolute>"; };
+		3CEAD3552EC5B5B600A92657 /* appleWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "appleWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CF14B4B2EC58800000E20DF /* FitsAppWidgeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FitsAppWidgeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CF14B4D2EC58800000E20DF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		3CF14B4F2EC58800000E20DF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -138,6 +138,7 @@
 				3CF14B512EC58800000E20DF /* FitsAppWidge */,
 				3CF14B4C2EC58800000E20DF /* Frameworks */,
 				3CF14B5C2EC58801000E20DF /* FitsApp.app */,
+				3CEAD3552EC5B5B600A92657 /* appleWatch Watch App.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -198,7 +199,7 @@
 			packageProductDependencies = (
 			);
 			productName = "appleWatch Watch App";
-			productReference = 3CF14A302EC43158000E20DF /* appleWatch Watch App.app */;
+			productReference = 3CEAD3552EC5B5B600A92657 /* appleWatch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3CF14B4A2EC58800000E20DF /* FitsAppWidgeExtension */ = {

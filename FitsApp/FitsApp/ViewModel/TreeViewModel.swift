@@ -4,12 +4,19 @@
 //
 //  Created by Cindy Hu on 9/11/2025.
 //
+//
+//  TreeViewModel.swift
+//  FitsApp
+//
+//  Created by Cindy Hu on 9/11/2025.
+//
+
 import SwiftUI
 import Combine
 import WatchConnectivity
 
 class TreeViewModel: NSObject, ObservableObject, WCSessionDelegate {
-    @Published var stepCount: Int = 25_000
+    @Published var stepCount: Int = 10_000 // updated for UI testing
     @AppStorage("selectedTreeIndex") public var selectedTreeIndex: Int = 0
 
     override init() {
@@ -47,7 +54,6 @@ class TreeViewModel: NSObject, ObservableObject, WCSessionDelegate {
         #if DEBUG
         print("📱 WCSession did deactivate; reactivating…")
         #endif
-        // Per docs, after deactivation you should re-activate the session.
         WCSession.default.activate()
     }
 
@@ -66,14 +72,16 @@ class TreeViewModel: NSObject, ObservableObject, WCSessionDelegate {
         stepCount += max(0, steps)
     }
 
+    // 1 segment per 5,000 steps (max 20)
     var treeSegmentCount: Int {
         return min(stepCount / 5000, 20)
     }
 
     func getTreeImage(for index: Int) -> String {
-        if (selectedTreeIndex == 1) {
-            let pattern = [1, 3, 5, 9, 2, 4, 6, 8]
-            let imageNumber = pattern[index % 9]
+        if selectedTreeIndex == 1 {
+            // teammate’s simplified Pine pattern
+            let pattern = [1, 2, 3]
+            let imageNumber = pattern[index % 3]
             return "Pine\(imageNumber)"
         } else {
             let pattern = [1, 3, 2]
@@ -82,6 +90,7 @@ class TreeViewModel: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    // MARK: - CloudView Data Source
     struct CloudStep: Identifiable {
         let id = UUID()
         let value: Int
@@ -101,4 +110,3 @@ class TreeViewModel: NSObject, ObservableObject, WCSessionDelegate {
         return steps
     }
 }
-
