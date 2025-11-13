@@ -1,23 +1,33 @@
-
-//
-//  Coremotion.swift
-//  FitsappWatchFunction Watch App
-//
-//  Created by Callum on 12/11/2025.
-//
-
 import Foundation
 import CoreMotion
 import Combine
+import WatchConnectivity
 
-class MotionManager: ObservableObject {
+class MotionManager: NSObject, ObservableObject, WCSessionDelegate {
     private let pedometer = CMPedometer()
     @Published var isMoving = false
     @Published var stepCountWatch: Int = 0
-    @Published var stepHistory: [Int] = [] // ✅ store all tapped step counts here
+    @Published var stepHistory: [Int] = []
 
     private var motionStartDate: Date?
 
+    override init() {
+        super.init()
+        activateSession()
+    }
+
+    // MARK: - WatchConnectivity setup
+    private func activateSession() {
+        if WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
+        }
+    }
+
+    func session(_: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+
+    // MARK: - Pedometer logic
     func startMonitoring() {
         guard CMPedometer.isStepCountingAvailable(),
               CMPedometer.isPedometerEventTrackingAvailable() else { return }
@@ -50,8 +60,12 @@ class MotionManager: ObservableObject {
 
             DispatchQueue.main.async {
                 self.stepCountWatch = data.numberOfSteps.intValue
-                self.stepHistory.append(self.stepCountWatch) // ✅ add new step count to list
-                print("Step History: \(self.stepHistory)")   // ✅ print updated list
+                self.stepHistory.append(self.stepCountWatch)
+                print("Step History: \(self.stepHistory)")
+
+                // ✅ Send latest count to iPhone
+                self.sendLatestStepToPhone()
+
                 completion(self.stepCountWatch)
             }
         }
@@ -64,5 +78,19 @@ class MotionManager: ObservableObject {
     func resetStepTracking() {
         motionStartDate = Date()
         stepCountWatch = 0
+    }
+
+    // MARK: - Send data to iPhone
+    private func sendLatestStepToPhone() {
+        guard WCSession.default.isReachable else {
+            print("📡 iPhone not reachable.")
+            return
+        }
+        if let latest = stepHistory.last {
+            WCSession.default.sendMessage(["latestSteps": latest], replyHandler: nil) { error in
+                print("❌ Failed to send: \(error.localizedDescription)")
+            }
+            print("📤 Sent \(latest) steps to iPhone")
+        }
     }
 }
