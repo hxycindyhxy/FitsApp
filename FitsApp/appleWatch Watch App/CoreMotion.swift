@@ -13,7 +13,8 @@ import Combine
 class MotionManager: ObservableObject {
     private let pedometer = CMPedometer()
     @Published var isMoving = false
-    @Published var stepCount: Int = 0
+    @Published var stepCountWatch: Int = 0
+    @Published var stepHistory: [Int] = [] // ✅ store all tapped step counts here
 
     private var motionStartDate: Date?
 
@@ -48,8 +49,10 @@ class MotionManager: ObservableObject {
             }
 
             DispatchQueue.main.async {
-                self.stepCount = data.numberOfSteps.intValue
-                completion(self.stepCount)
+                self.stepCountWatch = data.numberOfSteps.intValue
+                self.stepHistory.append(self.stepCountWatch) // ✅ add new step count to list
+                print("Step History: \(self.stepHistory)")   // ✅ print updated list
+                completion(self.stepCountWatch)
             }
         }
     }
@@ -60,6 +63,6 @@ class MotionManager: ObservableObject {
     
     func resetStepTracking() {
         motionStartDate = Date()
-        stepCount = 0
+        stepCountWatch = 0
     }
 }
