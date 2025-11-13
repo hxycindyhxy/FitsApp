@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3CF14A3A2EC4315A000E20DF /* appleWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 3CF14A302EC43158000E20DF /* appleWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3CF14B4E2EC58800000E20DF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF14B4D2EC58800000E20DF /* WidgetKit.framework */; };
+		3CF14B502EC58800000E20DF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF14B4F2EC58800000E20DF /* SwiftUI.framework */; };
+		3CF14B5B2EC58801000E20DF /* FitsAppWidgeExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3CF14B4B2EC58800000E20DF /* FitsAppWidgeExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -18,6 +20,13 @@
 			remoteGlobalIDString = 3CF14A2F2EC43158000E20DF;
 			remoteInfo = "appleWatch Watch App";
 		};
+		3CF14B592EC58801000E20DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CCA523D2EBC1C0600D80050 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CF14B4A2EC58800000E20DF;
+			remoteInfo = FitsAppWidgeExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,19 +36,39 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				3CF14A3A2EC4315A000E20DF /* appleWatch Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CF14B462EC58513000E20DF /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3CF14B5B2EC58801000E20DF /* FitsAppWidgeExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3CCA52452EBC1C0600D80050 /* FitsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3CF14A302EC43158000E20DF /* appleWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "appleWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CF14A302EC43158000E20DF /* appleWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "appleWatch Watch App.app"; path = "/Users/cindyhu/Desktop/TestingTesting/OneMOre/FitsApp/FitsApp/build/Debug-watchos/appleWatch Watch App.app"; sourceTree = "<absolute>"; };
+		3CF14B4B2EC58800000E20DF /* FitsAppWidgeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FitsAppWidgeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CF14B4D2EC58800000E20DF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		3CF14B4F2EC58800000E20DF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		3CF14B5C2EC58801000E20DF /* FitsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3CF14B602EC58801000E20DF /* Exceptions for "FitsAppWidge" folder in "FitsAppWidgeExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3CF14B4A2EC58800000E20DF /* FitsAppWidgeExtension */;
+		};
 		F4BA8EF32EC404CE00FECF60 /* Exceptions for "FitsApp" folder in "FitsApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -63,6 +92,14 @@
 			path = "appleWatch Watch App";
 			sourceTree = "<group>";
 		};
+		3CF14B512EC58800000E20DF /* FitsAppWidge */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3CF14B602EC58801000E20DF /* Exceptions for "FitsAppWidge" folder in "FitsAppWidgeExtension" target */,
+			);
+			path = FitsAppWidge;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +117,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3CF14B482EC58800000E20DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CF14B502EC58800000E20DF /* SwiftUI.framework in Frameworks */,
+				3CF14B4E2EC58800000E20DF /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -88,17 +134,20 @@
 			children = (
 				3CCA52472EBC1C0600D80050 /* FitsApp */,
 				3CF14A312EC43158000E20DF /* appleWatch Watch App */,
-				3CCA52462EBC1C0600D80050 /* Products */,
+				3CF14B4B2EC58800000E20DF /* FitsAppWidgeExtension.appex */,
+				3CF14B512EC58800000E20DF /* FitsAppWidge */,
+				3CF14B4C2EC58800000E20DF /* Frameworks */,
+				3CF14B5C2EC58801000E20DF /* FitsApp.app */,
 			);
 			sourceTree = "<group>";
 		};
-		3CCA52462EBC1C0600D80050 /* Products */ = {
+		3CF14B4C2EC58800000E20DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3CCA52452EBC1C0600D80050 /* FitsApp.app */,
-				3CF14A302EC43158000E20DF /* appleWatch Watch App.app */,
+				3CF14B4D2EC58800000E20DF /* WidgetKit.framework */,
+				3CF14B4F2EC58800000E20DF /* SwiftUI.framework */,
 			);
-			name = Products;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,11 +161,13 @@
 				3CCA52422EBC1C0600D80050 /* Frameworks */,
 				3CCA52432EBC1C0600D80050 /* Resources */,
 				3CF14A3E2EC4315A000E20DF /* Embed Watch Content */,
+				3CF14B462EC58513000E20DF /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				3CF14A392EC4315A000E20DF /* PBXTargetDependency */,
+				3CF14B5A2EC58801000E20DF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				3CCA52472EBC1C0600D80050 /* FitsApp */,
@@ -125,7 +176,7 @@
 			packageProductDependencies = (
 			);
 			productName = FitsApp;
-			productReference = 3CCA52452EBC1C0600D80050 /* FitsApp.app */;
+			productReference = 3CF14B5C2EC58801000E20DF /* FitsApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3CF14A2F2EC43158000E20DF /* appleWatch Watch App */ = {
@@ -150,6 +201,28 @@
 			productReference = 3CF14A302EC43158000E20DF /* appleWatch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3CF14B4A2EC58800000E20DF /* FitsAppWidgeExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CF14B5D2EC58801000E20DF /* Build configuration list for PBXNativeTarget "FitsAppWidgeExtension" */;
+			buildPhases = (
+				3CF14B472EC58800000E20DF /* Sources */,
+				3CF14B482EC58800000E20DF /* Frameworks */,
+				3CF14B492EC58800000E20DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3CF14B512EC58800000E20DF /* FitsAppWidge */,
+			);
+			name = FitsAppWidgeExtension;
+			packageProductDependencies = (
+			);
+			productName = FitsAppWidgeExtension;
+			productReference = 3CF14B4B2EC58800000E20DF /* FitsAppWidgeExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -166,6 +239,9 @@
 					3CF14A2F2EC43158000E20DF = {
 						CreatedOnToolsVersion = 26.1;
 					};
+					3CF14B4A2EC58800000E20DF = {
+						CreatedOnToolsVersion = 26.1;
+					};
 				};
 			};
 			buildConfigurationList = 3CCA52402EBC1C0600D80050 /* Build configuration list for PBXProject "FitsApp" */;
@@ -178,12 +254,13 @@
 			mainGroup = 3CCA523C2EBC1C0600D80050;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 3CCA52462EBC1C0600D80050 /* Products */;
+			productRefGroup = 3CCA523C2EBC1C0600D80050;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				3CCA52442EBC1C0600D80050 /* FitsApp */,
 				3CF14A2F2EC43158000E20DF /* appleWatch Watch App */,
+				3CF14B4A2EC58800000E20DF /* FitsAppWidgeExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -197,6 +274,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3CF14A2E2EC43158000E20DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CF14B492EC58800000E20DF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -220,6 +304,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3CF14B472EC58800000E20DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -227,6 +318,11 @@
 			isa = PBXTargetDependency;
 			target = 3CF14A2F2EC43158000E20DF /* appleWatch Watch App */;
 			targetProxy = 3CF14A382EC4315A000E20DF /* PBXContainerItemProxy */;
+		};
+		3CF14B5A2EC58801000E20DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CF14B4A2EC58800000E20DF /* FitsAppWidgeExtension */;
+			targetProxy = 3CF14B592EC58801000E20DF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -490,6 +586,66 @@
 			};
 			name = Release;
 		};
+		3CF14B5E2EC58801000E20DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G847C66JGW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FitsAppWidge/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FitsAppWidge;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KiwiKuties.FitsApp5.FitsAppWidge;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3CF14B5F2EC58801000E20DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G847C66JGW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FitsAppWidge/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FitsAppWidge;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = KiwiKuties.FitsApp5.FitsAppWidge;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -516,6 +672,15 @@
 			buildConfigurations = (
 				3CF14A3C2EC4315A000E20DF /* Debug */,
 				3CF14A3D2EC4315A000E20DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CF14B5D2EC58801000E20DF /* Build configuration list for PBXNativeTarget "FitsAppWidgeExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CF14B5E2EC58801000E20DF /* Debug */,
+				3CF14B5F2EC58801000E20DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
