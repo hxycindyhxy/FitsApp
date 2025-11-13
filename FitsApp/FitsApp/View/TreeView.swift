@@ -15,6 +15,16 @@ struct TreeView: View {
     @State private var showingCustomisation: Bool = false
     private enum Route: Hashable { case goal, customise }
     
+    // Helper function to get goal step count
+    private func goalStepCount(for activityLevel: String) -> Int {
+        switch activityLevel {
+        case "casual": return 35_000
+        case "committed": return 52_500
+        case "consistent": return 70_000
+        default: return 0
+        }
+    }
+    
     var body: some View {
         NavigationStack(path: $path) {
             coreContent
@@ -95,8 +105,26 @@ struct TreeView: View {
                                 
                                 // Top content
                                 Text("\(viewModel.stepCount.formatted(.number)) STEPS")
-                                    .font(.custom("Poppins-Bold", size: 42))
-                                    .offset(x: 0, y: -100)
+                                    .font(.custom("Poppins-Bold", size: 36))
+                                    .offset(x: 0, y: -40)
+                                
+                                // Goal progress indicator
+                                if !goalSettings.activityLevel.isEmpty {
+                                    let goalSteps = goalStepCount(for: goalSettings.activityLevel)
+                                    let remaining = goalSteps - viewModel.stepCount
+                                    
+                                    if remaining > 0 {
+                                        Text("\(remaining.formatted(.number)) to your goal")
+                                            .font(.custom("Poppins-SemiBold", size: 16))
+                                            .foregroundColor(.black.opacity(0.7))
+                                            .offset(x: 0, y: -45)
+                                    } else {
+                                        Text("🎉 Goal reached!")
+                                            .font(.custom("Poppins-Bold", size: 18))
+                                            .foregroundColor(.black.opacity(0.8))
+                                            .offset(x: 0, y: -45)
+                                    }
+                                }
                             }
                         }
                         .overlay(alignment: .bottom) {
@@ -179,6 +207,7 @@ struct TreeView: View {
                             
                             // Dismiss button
                             Button {
+                                // Trigger animation first, then dismiss after a brief delay
                                 withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
                                     showingCustomisation = false
                                 }
