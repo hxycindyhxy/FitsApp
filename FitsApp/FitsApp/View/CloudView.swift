@@ -15,7 +15,7 @@ struct CloudView: View {
             // Static 5,000 cloud
             ZStack {
                 Text("5,000")
-                    .font(.system(size: 26))
+                    .font(.custom("Poppins-Bold", size: 26))
                     .fontWeight(.bold)
                     .offset(x: -120, y: 100)
                     .foregroundColor(Color("FontColour"))
@@ -36,7 +36,7 @@ struct CloudView: View {
 
                 ZStack {
                     Text("\(cloud.value.formatted())")
-                        .font(.system(size: 26))
+                        .font(.custom("Poppins-Bold", size: 26))
                         .fontWeight(.bold)
                         .foregroundColor(Color("FontColour"))
                         .opacity(textOpacity)

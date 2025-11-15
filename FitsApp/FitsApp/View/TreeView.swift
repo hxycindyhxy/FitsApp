@@ -15,6 +15,16 @@ struct TreeView: View {
     @State private var showingCustomisation: Bool = false
     private enum Route: Hashable { case goal, customise }
     
+    // Helper function to get goal step count
+    private func goalStepCount(for activityLevel: String) -> Int {
+        switch activityLevel {
+        case "casual": return 35_000
+        case "committed": return 52_500
+        case "consistent": return 70_000
+        default: return 0
+        }
+    }
+    
     var body: some View {
         NavigationStack(path: $path) {
             coreContent
@@ -40,7 +50,34 @@ struct TreeView: View {
                 ZStack {
                     // Scrollable content
                     ScrollView(.vertical, showsIndicators: false) {
-                        ZStack (alignment: .bottom ){
+                        ZStack (alignment: .bottom){
+                            
+                            // 🌳 Trunk 3-case logic
+                            if viewModel.treeSegmentCount == 1 {
+                                Image("Trunk")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 60)
+                                    .offset(y: 10)
+                            } else if viewModel.treeSegmentCount == 2 {
+                                    Image("Trunk")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60)
+                                        .offset(y: -30)
+                            } else if viewModel.treeSegmentCount >= 3 {
+                                // For 3 or more, repeat trunk dynamically (simulate stacked growth)
+                                ForEach(0..<min(viewModel.treeSegmentCount / 2, 5), id: \.self) { i in
+                                    Image("Trunk")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60)
+                                        .offset(y: -80 - CGFloat(i * 60))
+                                }
+                            }
+                                
+                                
+                            
                             VStack{
                                 Spacer()
                                 TreeCrownView(viewModel: viewModel)
@@ -53,11 +90,7 @@ struct TreeView: View {
                                 CloudView(viewModel: viewModel)
                                     .offset(x:0,y: -360)
                                 
-                                Image("Trunk")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60)
-                                    .offset(y: -80)
+                                
                                 
                                 Image("Ground")
                                     .resizable()
@@ -73,13 +106,28 @@ struct TreeView: View {
                                 // Top content
                                 Text("\(viewModel.stepCount.formatted(.number)) STEPS")
                                     .font(.custom("Poppins-Bold", size: 36))
-                                    .offset(x: 0, y: -80)
+                                    .offset(x: 0, y: -40)
                                 
+                                // Goal progress indicator
+                                if !goalSettings.activityLevel.isEmpty {
+                                    let goalSteps = goalStepCount(for: goalSettings.activityLevel)
+                                    let remaining = goalSteps - viewModel.stepCount
+                                    
+                                    if remaining > 0 {
+                                        Text("\(remaining.formatted(.number)) to your goal")
+                                            .font(.custom("Poppins-SemiBold", size: 16))
+                                            .foregroundColor(.black.opacity(0.7))
+                                            .offset(x: 0, y: -45)
+                                    } else {
+                                        Text("🎉 Goal reached!")
+                                            .font(.custom("Poppins-Bold", size: 18))
+                                            .foregroundColor(.black.opacity(0.8))
+                                            .offset(x: 0, y: -45)
+                                    }
+                                }
                             }
                         }
                         .overlay(alignment: .bottom) {
-                            // Tree name plaque - positioned to the side of the tree base
-                            // Adjust x: left/right position, y: height (negative = higher, positive = lower)
                             if !goalSettings.treeName.isEmpty {
                                 TreeNamePlaque(name: goalSettings.treeName)
                                     .rotationEffect(.degrees(-3))
@@ -159,6 +207,7 @@ struct TreeView: View {
                             
                             // Dismiss button
                             Button {
+                                // Trigger animation first, then dismiss after a brief delay
                                 withAnimation(.spring(response: 0.45, dampingFraction: 0.9)) {
                                     showingCustomisation = false
                                 }
@@ -305,6 +354,35 @@ struct TreeNamePlaque: View {
         }
     }
 }
+
+struct CurvedText: View {
+    let text: String
+    let radius: CGFloat
+    let angle: Double // total sweep angle of the curve (in degrees)
+    
+    var body: some View {
+        let characters = Array(text)
+        let anglePerChar = angle / Double(characters.count)
+        let startAngle = -angle / 2
+        
+        ZStack {
+            ForEach(0..<characters.count, id: \.self) { i in
+                let charAngle = startAngle + (Double(i) * anglePerChar)
+                let radian = charAngle * .pi / 180
+                let x = cos(radian) * radius
+                let y = sin(radian) * radius
+                
+                Text(String(characters[i]))
+                    .font(.custom("Poppins-Bold", size: 36))
+                    .foregroundColor(.white)
+                    .position(x: radius - x, y: radius - y)
+                    .rotationEffect(.degrees(-charAngle))
+            }
+        }
+        .frame(width: radius * 2, height: radius, alignment: .center)
+    }
+}
+
 
 
 
